@@ -15,7 +15,15 @@ $('#title').on('change', (e) => {
   }
 });
 
+//function for hidding and disabling checkboxes
+
+function toggleCheckbox (checkbox, boolean, opacity) {
+  $(checkbox).prop("disabled", boolean);
+  $(checkbox).parent().css('opacity', opacity);
+}
+
 //update T-shirt drop down when there are conflicting commands
+$('#colors-js-puns').hide(); //hiding T-shirt color before design is selected
 $('#design').on('change', () => {
   let selectedOption = $('#design option:selected').text();
   if (selectedOption === 'Theme - JS Puns') {
@@ -26,6 +34,7 @@ $('#design').on('change', () => {
     $('option[value="darkslategrey"]').show();
     $('option[value="gold"]').show();
     $("#color").val('cornflowerblue');
+    $('#colors-js-puns').show(); //unhidding color dropdown
   } else if (selectedOption === 'Theme - I ♥ JS') {
     let tomato = $('option[value="tomato"]');
     $('option[value="cornflowerblue"]').hide();
@@ -35,15 +44,42 @@ $('#design').on('change', () => {
     $('option[value="steelblue"]').show();
     $('option[value="dimgrey"]').show();
     $("#color").val('tomato');
+    $('#colors-js-puns').show(); //unhidding color dropdown
+  } else {
+    $('#colors-js-puns').hide(); //hidding dropdown
   }
 });
 
 //'Register for Activities' section. No conflicting schedules with jquery
+$('input[name="js-frameworks"]').on('click', () => {
+  if ($('input[name="js-frameworks"]').is(':checked')) {
+    toggleCheckbox('input[name="express"]', true, 0.5);
+  } else {
+    toggleCheckbox('input[name="express"]', false, 1.0);
+  }
+});
 
-// if ($('input[name="js-frameworks"]').is(':checked')) {
-//   $('input[name="express"]').prop("disabled", true);
-// } else if ($('input[name="js-libs"]').is(':checked')) {
-//   $('input[name="node"]').prop("disabled", true);
-// }
+$('input[name="express').on('click', () => {
+  if ($('input[name="express"]').is(':checked')) {
+    toggleCheckbox('input[name="js-frameworks"]', true, 0.5);
+  } else {
+    toggleCheckbox('input[name="js-frameworks"]', false, 1.0);
+  }
+});
 
+$('input[name="js-libs"]').on('click', () => {
+  if ($('input[name="js-libs"]').is(':checked')) {
+    toggleCheckbox('input[name="node"]', true, 0.5);
+  } else {
+    toggleCheckbox('input[name="node"]', false, 1.0);
+  }
+});
+
+$('input[name="node"]').on('click', () => {
+  if ($('input[name="node"]').is(':checked')) {
+    toggleCheckbox('input[name="js-libs"]', true, 0.5);
+  } else {
+    toggleCheckbox('input[name="js-libs"]', false, 1.0);
+  }
+});
 //'Register for Activities' section. Adding up prices at botton of list
