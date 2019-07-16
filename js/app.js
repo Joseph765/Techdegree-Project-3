@@ -16,10 +16,24 @@ $('#title').on('change', (e) => {
 });
 
 //function for hidding and disabling checkboxes
-
 function toggleCheckbox (checkbox, boolean, opacity) {
   $(checkbox).prop("disabled", boolean);
   $(checkbox).parent().css('opacity', opacity);
+}
+
+//creating a counter for total price checked in checkboxes
+let totalPrice = 0;
+$('fieldset.activities').append('<p>Total Price: $' + totalPrice + '</p>');
+
+//function for updating prices
+function updatePrice(operator, amount) {
+  if (operator == '+') {
+    totalPrice += amount;
+    $('fieldset.activities p').text('Total Price: $' + totalPrice);
+  } else if (operator == '-') {
+    totalPrice -= amount;
+    $('fieldset.activities p').text('Total Price: $' + totalPrice);
+  }
 }
 
 //update T-shirt drop down when there are conflicting commands
@@ -51,35 +65,69 @@ $('#design').on('change', () => {
 });
 
 //'Register for Activities' section. No conflicting schedules with jquery
-$('input[name="js-frameworks"]').on('click', () => {
-  if ($('input[name="js-frameworks"]').is(':checked')) {
-    toggleCheckbox('input[name="express"]', true, 0.5);
+$('input[name="all"]').on('click', () => {
+  if ($('input[name="all"]').is(':checked')) {
+    updatePrice('+', 200);
   } else {
-    toggleCheckbox('input[name="express"]', false, 1.0);
+    updatePrice('-', 200);
   }
 });
 
-$('input[name="express').on('click', () => {
-  if ($('input[name="express"]').is(':checked')) {
-    toggleCheckbox('input[name="js-frameworks"]', true, 0.5);
+$('input[name="js-frameworks"]').on('click', () => {
+  if ($('input[name="js-frameworks"]').is(':checked')) {
+    toggleCheckbox('input[name="express"]', true, 0.5);
+    updatePrice('+', 100);
   } else {
-    toggleCheckbox('input[name="js-frameworks"]', false, 1.0);
+    toggleCheckbox('input[name="express"]', false, 1.0);
+    updatePrice('-', 100);
   }
 });
 
 $('input[name="js-libs"]').on('click', () => {
   if ($('input[name="js-libs"]').is(':checked')) {
     toggleCheckbox('input[name="node"]', true, 0.5);
+    updatePrice('+', 100);
   } else {
     toggleCheckbox('input[name="node"]', false, 1.0);
+    updatePrice('-', 100);
+  }
+});
+
+$('input[name="express').on('click', () => {
+  if ($('input[name="express"]').is(':checked')) {
+    toggleCheckbox('input[name="js-frameworks"]', true, 0.5);
+    updatePrice('+', 100);
+  } else {
+    toggleCheckbox('input[name="js-frameworks"]', false, 1.0);
+    updatePrice('-', 100);
   }
 });
 
 $('input[name="node"]').on('click', () => {
   if ($('input[name="node"]').is(':checked')) {
     toggleCheckbox('input[name="js-libs"]', true, 0.5);
+    updatePrice('+', 100);
   } else {
     toggleCheckbox('input[name="js-libs"]', false, 1.0);
+    updatePrice('-', 100);
   }
 });
+
+$('input[name="build-tools"]').on('click', () => {
+  if ($('input[name="build-tools"]').is(':checked')) {
+    updatePrice('+', 100);
+  } else {
+    updatePrice('-', 100);
+  }
+});
+
+name="npm"
+$('input[name="npm"]').on('click', () => {
+  if ($('input[name="npm"]').is(':checked')) {
+    updatePrice('+', 100);
+  } else {
+    updatePrice('-', 100);
+  }
+});
+
 //'Register for Activities' section. Adding up prices at botton of list
