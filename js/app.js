@@ -40,7 +40,9 @@ $('#design').on('change', () => {
 //'Register for Activities' section. No conflicting schedules with jquery
 
 if ($('input[name="js-frameworks"]').is(':checked')) {
+  $('input[name="express"]').prop("disabled", true);
 } else if ($('input[name="js-libs"]').is(':checked')) {
+  $('input[name="node"]').prop("disabled", true);
 }
 
 //'Register for Activities' section. Adding up prices at botton of list
