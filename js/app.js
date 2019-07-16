@@ -1,6 +1,11 @@
 //focus on first input when page reloads
 $('#name').focus();
 
+//when the page loads, the 'creditcard' option is already selected
+$('#payment').val('credit card');
+$('#payPal').hide();
+$('#bitcoin').hide();
+
 //Job role 'other' input hiding
 $('#other-title').hide();
 
