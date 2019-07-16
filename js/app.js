@@ -36,3 +36,11 @@ $('#design').on('change', () => {
     $('option[value="tomato"]').selected = true;
   }
 });
+
+//'Register for Activities' section. No conflicting schedules with jquery
+
+if ($('input[name="js-frameworks"]').is(':checked')) {
+} else if ($('input[name="js-libs"]').is(':checked')) {
+}
+
+//'Register for Activities' section. Adding up prices at botton of list
