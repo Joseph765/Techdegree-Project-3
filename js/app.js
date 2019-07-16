@@ -25,24 +25,25 @@ $('#design').on('change', () => {
     $('option[value="cornflowerblue"]').show();
     $('option[value="darkslategrey"]').show();
     $('option[value="gold"]').show();
-    $('option[value="cornflowerblue"]').selected = true;
+    $("#color").val('cornflowerblue');
   } else if (selectedOption === 'Theme - I ♥ JS') {
+    let tomato = $('option[value="tomato"]');
     $('option[value="cornflowerblue"]').hide();
     $('option[value="darkslategrey"]').hide();
     $('option[value="gold"]').hide();
     $('option[value="tomato"]').show();
     $('option[value="steelblue"]').show();
     $('option[value="dimgrey"]').show();
-    $('option[value="tomato"]').selected = true;
+    $("#color").val('tomato');
   }
 });
 
 //'Register for Activities' section. No conflicting schedules with jquery
 
-if ($('input[name="js-frameworks"]').is(':checked')) {
-  $('input[name="express"]').prop("disabled", true);
-} else if ($('input[name="js-libs"]').is(':checked')) {
-  $('input[name="node"]').prop("disabled", true);
-}
+// if ($('input[name="js-frameworks"]').is(':checked')) {
+//   $('input[name="express"]').prop("disabled", true);
+// } else if ($('input[name="js-libs"]').is(':checked')) {
+//   $('input[name="node"]').prop("disabled", true);
+// }
 
 //'Register for Activities' section. Adding up prices at botton of list
