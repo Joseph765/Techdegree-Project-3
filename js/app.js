@@ -121,7 +121,6 @@ $('input[name="build-tools"]').on('click', () => {
   }
 });
 
-name="npm"
 $('input[name="npm"]').on('click', () => {
   if ($('input[name="npm"]').is(':checked')) {
     updatePrice('+', 100);
@@ -130,4 +129,24 @@ $('input[name="npm"]').on('click', () => {
   }
 });
 
-//'Register for Activities' section. Adding up prices at botton of list
+//Updating based on form of payment selected
+$('#payment').on('change', () => {
+  let selectedOption = $('#payment option:selected').text();
+  if (selectedOption == 'Select Payment Method') {
+    $('#credit-card').show();
+    $('#payPal').hide();
+    $('#bitcoin').hide();
+  } else if (selectedOption == 'Credit Card') {
+    $('#credit-card').show();
+    $('#payPal').hide();
+    $('#bitcoin').hide();
+  } else if (selectedOption == 'PayPal') {
+    $('#credit-card').hide();
+    $('#payPal').show();
+    $('#bitcoin').hide();
+  } else if (selectedOption == 'Bitcoin') {
+    $('#credit-card').hide();
+    $('#payPal').hide();
+    $('#bitcoin').show();
+  }
+});
