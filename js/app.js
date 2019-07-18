@@ -41,6 +41,66 @@ function updatePrice(operator, amount) {
   }
 }
 
+function isValidEmail(email) {
+  if (/^[^@.]+@[^@.]+\.[a-z]+$/i.test(email)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+//each method: $('fieldset.activities input').each( function(element) {
+
+function checkboxChecked() {
+  const checkboxes = $('fieldset.activities input');
+  for (i = 0; i < checkboxes.length; i += 1) {
+    if (checkboxes[i].checked === true) {
+      $('p.alert').remove(); //if any checkbox is checked, the alert paragraph: "At least one checkbox needs to be checked." will be removed
+      return true;
+    }
+  }
+  return false;
+}
+
+
+//validation for creditcard Number
+function isValidCcNumber(number){
+  if (/\d{13}/.test(number) || /\d{14}/.test(number) || /\d{15}/.test(number) || /\d{16}/.test(number)) {
+    return true;
+  } else if (number.length > 16) {
+    return false;
+  } else {
+    return false;
+  }
+}
+
+function isValidZipNumber(number){
+  if (/\d{5}/.test(number)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isValidCvv(number) {
+  if (/\d{3}/.test(number)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+//if any checkbox is checked, the alert paragraph: "At least one checkbox needs to be checked." will be removed
+$('fieldset.activities input').on('click', (e) => {
+  const checkboxes = $('fieldset.activities input');
+  for (i = 0; i < checkboxes.length; i += 1) {
+    if (checkboxes[i].checked === true) {
+      $('p.alert').remove(); //if any checkbox is checked, the alert paragraph: "At least one checkbox needs to be checked." will be removed
+      return true;
+    }
+  }
+});
+
 //update T-shirt drop down when there are conflicting commands
 $('#colors-js-puns').hide(); //hiding T-shirt color before design is selected
 $('#design').on('change', () => {
@@ -155,3 +215,86 @@ $('#payment').on('change', () => {
     $('#bitcoin').show();
   }
 });
+
+$('input#mail').on('keyup', () => {
+  if (isValidEmail($('input#mail').val()) === false || $('input#mail').val() == '') {
+    $('input#mail').css('border-color', 'red');
+  } else if (isValidEmail($('input#mail').val()) === true) {
+    $('input#mail').css('border-color', '');
+  }
+});
+
+//form validation
+$('button[type="submit"]').on('click', (e) => {
+  let selectedOption = $('#payment option:selected').text();
+  if ($('input#name').val() == '') { //if name is empty
+    $('#name').css('border-color', 'red');
+    e.preventDefault();
+  }
+
+  //if is valid email adress (formated like one)
+  if (isValidEmail($('input#mail').val()) === false || $('input#mail').val() == '') {
+    $('input#mail').css('border-color', 'red');
+    e.preventDefault();
+  }
+
+  //at least one checkbox is checked
+  if ($('p.alert')) {
+    $('p.alert').remove();
+  }
+  if (checkboxChecked() === false) {
+    $('fieldset.activities').prepend('<p class="alert">At least one checkbox needs to be checked.</p>')
+    $('p.alert').css('color', 'red');
+    e.preventDefault();
+  } else {
+    $('p.alert').remove();
+  }
+
+  //form validation for creditcard info
+  if (selectedOption == 'Credit Card') {
+
+    if ($('p.blankCC')) { //removes 'blank' error if it exists already
+      $('p.blankCC').remove();
+    }
+
+    if ($('#cc-num').val() == '' || $('#zip').val() == '' || $('cvv').val()) {
+      e.preventDefault();
+      $('#credit-card').prepend('<p class="blankCC">One or more Credit Card forms are empty</p>');
+      $('p.blankCC').css('color', 'red');
+    } else {
+
+      if ($('p.ccDigits')) {
+        $('p.ccDigits').remove();
+      }
+
+      if (isValidCcNumber($('input#cc-num').val()) === false) {
+        e.preventDefault();
+        $('#credit-card').prepend('<p class="ccDigits">Please enter a credit card number that is between 13 and 16 digits long');
+        $('p.ccDigits').css('color', 'red');
+      }
+
+      if($('p.zipError')) {
+        $('p.zipError').remove();
+      }
+
+      if(isValidZipNumber($('#zip').val()) === false) {
+        e.preventDefault();
+        $('#credit-card').prepend('<p class="zipError">A zip code MUST be 5 digits long.</p>');
+        $('p.zipError').css('color', 'red');
+      }
+
+      if($('p.cvvError')) {
+        $('p.cvvError').remove();
+      }
+
+      if(isValidCvv($('#cvv').val()) === false ) {
+        e.preventDefault();
+        $('#credit-card').prepend('<p class="cvvError">A CVV must be three digits long</p>');
+        $('p.cvvError').css('color', 'red');
+      }
+
+    }
+  }
+});
+
+checkboxChecked();
