@@ -60,6 +60,13 @@ function checkboxChecked() {
 }
 
 
+//function creating checkbox error
+function checkboxError() {
+  $('fieldset.activities').prepend('<p class="checkbox-alert">At least one checkbox needs to be checked.</p>')
+  $('p.checkbox-alert').css('color', 'red');
+}
+
+
 //function for validating email
 function isValidEmail(email) {
   if (/^[^@.]+@[^@.]+\.[a-z]+$/i.test(email)) {
@@ -272,6 +279,16 @@ $('input#mail').on('keyup', () => {
 });
 
 
+//creates error message and automatically updates when one checkbox checked or unchecked
+checkboxError();
+$('input[type="checkbox"]').on('change', () => {
+  if (checkboxChecked() === false) {
+    checkboxError();
+  } else {
+    $('p.checkbox-alert').remove();
+  }
+});
+
 /////////////////////////////////////////////////////////////////////////
 ////////////////////////Form Validation/////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -286,6 +303,8 @@ $('button[type="submit"]').on('click', (e) => {
   if ($('input#name').val() == '') {
     $('#name').css('border-color', 'red');
     e.preventDefault();
+  } else {
+    $('#name').css('border-color', '');
   }
 
 
@@ -296,19 +315,9 @@ $('button[type="submit"]').on('click', (e) => {
   }
 
 
-  //remove checkbox alert before a new one is created
-  if ($('p.checkbox-alert')) {
-    $('p.checkbox-alert').remove();
-  }
-
-
-  //validation if no checkboxes are checked and prevents form from being submitted
+  //Prevents form from being submitting if no checkboxes are checked
   if (checkboxChecked() === false) {
-    $('fieldset.activities').prepend('<p class="checkbox-alert">At least one checkbox needs to be checked.</p>')
-    $('p.checkbox-alert').css('color', 'red');
     e.preventDefault();
-  } else {
-    $('p.checkbox-alert').remove();
   }
 
 
@@ -329,7 +338,7 @@ $('button[type="submit"]').on('click', (e) => {
       $('p.blankCCAlert').css('color', 'red');
     }
 
-    //If the forms aren't blank, these next lines will validate if other information is correct
+    //If the Credit Card forms aren't blank, these next lines will validate if other information is correct
     else {
 
 
